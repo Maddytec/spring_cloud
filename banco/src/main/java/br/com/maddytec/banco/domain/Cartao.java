@@ -23,6 +23,7 @@ public class Cartao {
     @Column(name = "nro_cartao")
     private Long numeroCartao;
 
+    @Column(name = "codigo_seguranca_cartao")
     private Long codigoSegurancaCartao;
     private BigDecimal valorCredito;
 }
