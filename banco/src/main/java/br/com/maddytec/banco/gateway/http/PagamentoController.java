@@ -28,9 +28,4 @@ public class PagamentoController {
         return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.OK);
     }
 
-    @GetMapping
-    public String teste(){
-        return "OK";
-    }
-
 }
