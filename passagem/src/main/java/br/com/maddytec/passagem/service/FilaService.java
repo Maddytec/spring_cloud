@@ -18,7 +18,7 @@ public class FilaService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Value("fila.saida")
+    @Value("${fila.saida}")
     private String filaSaida;
 
     public RetornoJson enviar(CompraChaveJson compraChaveJson) {

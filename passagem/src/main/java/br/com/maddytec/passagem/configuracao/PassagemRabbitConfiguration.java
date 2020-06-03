@@ -14,7 +14,7 @@ import java.util.Map;
 @Configuration
 public class PassagemRabbitConfiguration {
 
-    @Value("fila.saida")
+    @Value("${fila.saida}")
     private String queue;
 
     @Bean
