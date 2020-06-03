@@ -53,12 +53,12 @@ Após executar o item 2:
 ### 3.2 Retorno da requisição de pagamento, caso possua limite de crédito disponível no cartão de crédito
 
 ![Figura 3 - Retorno da requisição](image/retorno_positivo.png)
-<br>Figura 3 - Payload de retorno da requisição
+<br>Figura 3 - Payload de retorno positivo da requisição 
 
 ### 3.3 Retorno da requisição de pagamento, caso não tenha limite disponível no cartão de crédito
 
 ![Figura 4 - Retorno do comando docker-compose ps](image/retorno_negativo.png)
-<br>Figura 4 - Retorno do comando docker-compose ps
+<br>Figura 4 - Payload de retorno positivo da requisição
 
 ## 4. Remover os serviços
 - Comando para parar os serviços:
