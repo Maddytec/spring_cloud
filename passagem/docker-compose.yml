@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 8881:15672
+      - 5671:5671
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: maddytec
+      RABBITMQ_DEFAULT_PASS: maddytec
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: maddytec/spring_cloud-passagem:1.0
+    depends_on:
+      - rabbitmq
+    ports:
+      - 8086:8086
+    environment:
+    - SPRING_RABBITMQ_HOST=rabbitmq

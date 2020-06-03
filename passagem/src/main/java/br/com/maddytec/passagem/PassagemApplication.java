@@ -5,9 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PassagemApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(PassagemApplication.class, args);
-	}
-
+		public static void main(String[] args) {
+			SpringApplication.run(PassagemApplication.class, args);
+		}
+	
 }
+	
+
+
+
+
+	

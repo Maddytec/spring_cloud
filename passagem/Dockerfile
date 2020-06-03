@@ -10,6 +10,6 @@ RUN mvn -f /home/app/pom.xml clean package -Dmaven.test.skip
 # Package stage
 #
 FROM openjdk:14-jdk-alpine
-EXPOSE 8090
+EXPOSE 8086
 COPY --from=build /home/app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

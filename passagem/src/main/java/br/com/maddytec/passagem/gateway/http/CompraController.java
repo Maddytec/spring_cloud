@@ -3,6 +3,7 @@ package br.com.maddytec.passagem.gateway.http;
 import br.com.maddytec.passagem.gateway.json.CompraChaveJson;
 import br.com.maddytec.passagem.gateway.json.CompraJson;
 import br.com.maddytec.passagem.gateway.json.RetornoJson;
+import br.com.maddytec.passagem.service.FilaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -25,34 +26,24 @@ import java.util.UUID;
 public class CompraController {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    @Value("${fila.saida}")
-    private String filaSaida;
-
+    FilaService filaService;
 
     @PostMapping
     public ResponseEntity<RetornoJson> comprar(
-            @Valid @NotNull @RequestBody CompraJson compraJson) throws Exception{
+            @Valid @NotNull @RequestBody CompraJson compraJson) throws Exception {
+        RetornoJson retornoJson = null;
+        try {
+            CompraChaveJson compraChaveJson = CompraChaveJson.builder()
+                    .compraJson(compraJson)
+                    .chave(UUID.randomUUID().toString())
+                    .build();
 
-        CompraChaveJson compraChaveJson = CompraChaveJson.builder()
-        .compraJson(compraJson)
-        .chave(UUID.randomUUID().toString())
-        .build();
+            retornoJson = filaService.enviar(compraChaveJson);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(compraChaveJson);
+            return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-       log.info("Enviando para fila de compra.");
-        rabbitTemplate.convertAndSend(filaSaida, json);
-        log.info("Enviado para fila de compra.");
-
-        RetornoJson retornoJson = RetornoJson.builder()
-                .mensagem("Compra registrada com sucesso. Aguarde a confirmação do pagamento.")
-                .chavePesquisa(compraChaveJson.getChave())
-                .build();
-
-        return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.OK);
     }
-
 }
