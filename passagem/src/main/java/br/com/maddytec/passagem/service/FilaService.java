@@ -1,5 +1,6 @@
 package br.com.maddytec.passagem.service;
 
+import br.com.maddytec.passagem.gateway.exception.CompraNaoEnviadaException;
 import br.com.maddytec.passagem.gateway.json.CompraChaveJson;
 import br.com.maddytec.passagem.gateway.json.RetornoJson;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +22,7 @@ public class FilaService {
     @Value("${fila.saida}")
     private String filaSaida;
 
-    public RetornoJson enviar(CompraChaveJson compraChaveJson) {
+    public RetornoJson enviar(CompraChaveJson compraChaveJson) throws CompraNaoEnviadaException {
         try {
             log.info("Enviando para fila de compra.");
             rabbitTemplate.convertAndSend(filaSaida, compraChaveJson);
@@ -33,9 +34,7 @@ public class FilaService {
                     .build();
 
         } catch (Exception ex) {
-           return RetornoJson.builder()
-                    .mensagem("Serviço indisponivel, tente mais tarde.")
-                    .build();
+            throw new CompraNaoEnviadaException(ex.getMessage());
         }
     }
 }

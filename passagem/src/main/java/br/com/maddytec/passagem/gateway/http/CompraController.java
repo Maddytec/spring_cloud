@@ -1,5 +1,6 @@
 package br.com.maddytec.passagem.gateway.http;
 
+import br.com.maddytec.passagem.gateway.exception.CompraNaoEnviadaException;
 import br.com.maddytec.passagem.gateway.json.CompraChaveJson;
 import br.com.maddytec.passagem.gateway.json.CompraJson;
 import br.com.maddytec.passagem.gateway.json.RetornoJson;
@@ -30,20 +31,13 @@ public class CompraController {
 
     @PostMapping
     public ResponseEntity<RetornoJson> comprar(
-            @Valid @NotNull @RequestBody CompraJson compraJson) throws Exception {
-        RetornoJson retornoJson = null;
-        try {
-            CompraChaveJson compraChaveJson = CompraChaveJson.builder()
+            @Valid @NotNull @RequestBody CompraJson compraJson)  {
+        CompraChaveJson compraChaveJson = CompraChaveJson.builder()
                     .compraJson(compraJson)
                     .chave(UUID.randomUUID().toString())
                     .build();
 
-            retornoJson = filaService.enviar(compraChaveJson);
-
-            return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
+        RetornoJson retornoJson = filaService.enviar(compraChaveJson);
+        return new ResponseEntity<RetornoJson>(retornoJson, HttpStatus.OK);
     }
 }
