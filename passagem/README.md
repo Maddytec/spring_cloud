@@ -8,7 +8,8 @@ Microservices utilizando docker compose para envio da solicicitação de compra,
 3. [Como testar o projeto?](#3-como-testar-o-projeto)
 <br> 3.1 [Postman para realizar a requisição REST](#31-postman-para-realizar-a-requisição-REST)
 <br>3.2 [Retorno da requisição de compra, com serviço de fila RabbitMQ disponível](#32-Retorno-da-requisição-de-compra-com-serviço-de-fila-RabbitMQ-disponível)
-<br>3.3 [Retorno da requisição de compra, caso o serviço de fila RabbitMQ não esteja disponível](#33-Retorno-da-requisição-de-compra-caso-o-serviço-de-fila-RabbitMQ-não-esteja-disponível)
+<br>3.3 [Requisição de compra na Fila RabbitMQ](#33-Requisição-de-compra-na-Fila-RabbitMQ)
+<br>3.4 [Retorno da requisição de compra, caso o serviço de fila RabbitMQ não esteja disponível](#34-Retorno-da-requisição-de-compra-caso-o-serviço-de-fila-RabbitMQ-não-esteja-disponível)
 4. [Remover os serviços](#4-remover-os-servi%C3%A7os)
 5. [Licença](#5-licença)
 
@@ -56,11 +57,20 @@ Após executar o item 2:
 ![Figura 3 - Retorno da requisição](image/retorno_positivo.png)
 <br>Figura 3 - Payload de retorno positivo da requisição 
 
-### 3.3 Retorno da requisição de compra, caso o serviço de fila RabbitMQ não esteja disponível
+### 3.3 Requisição de compra na Fila RabbitMQ
+ - As solicitações enviadas no item 3.1 são enviadas para fila do RabbitMQ, para acessar a interface adicione a URL http://localhost:8881/ no seu navegador e em seguida preencha o Usuario e senha:
+ 	<br>Usuario: maddytec
+	<br>Senha: maddytec
+
+![Figura 4 - Aba Queue](image/queue.png)
+<br>Figura 4 - Requisições enviada para Queue "fila-compras-aguardando"  
+
+
+### 3.4 Retorno da requisição de compra, caso o serviço de fila RabbitMQ não esteja disponível
 <br>`$ docker stop passagem_rabbitmq_1`
 
-![Figura 4 - Retorno negativo da requisição](image/retorno_negativo.png)
-<br>Figura 4 - Payload de retorno negativo da requisição
+![Figura 5 - Retorno negativo da requisição](image/retorno_negativo.png)
+<br>Figura 5 - Payload de retorno negativo da requisição
 
 ## 4. Remover os serviços
 - Comando para parar os serviços:
