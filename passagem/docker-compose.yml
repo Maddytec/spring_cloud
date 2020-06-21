@@ -5,9 +5,9 @@ services:
   rabbitmq:
     image: rabbitmq:3.6.6-management
     ports:
-      - 8881:15672
-      - 5671:5671
       - 5672:5672
+      - 5671:5671
+      - 8881:15672
     environment:
       RABBITMQ_DEFAULT_USER: maddytec
       RABBITMQ_DEFAULT_PASS: maddytec

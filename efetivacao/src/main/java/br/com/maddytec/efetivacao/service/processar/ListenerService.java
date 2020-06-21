@@ -8,7 +8,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -32,7 +31,7 @@ public class ListenerService {
     @Value("${fila.entrada}")
     private String filaRepublicar;
 
-    @Value("${fila.finalizado}")
+    @Value("${fila.saida}")
     private String filaFinalizado;
 
     @HystrixCommand(fallbackMethod = "republicarOnMessage")
@@ -53,9 +52,7 @@ public class ListenerService {
                 .mensagem(pagamentoRetorno.getMensagem())
                 .build();
 
-        ObjectMapper obj = new ObjectMapper();
-        String jsonFinalizado = obj.writeValueAsString(compraFinalizadaJson);
-        rabbitTemplate.convertAndSend(filaFinalizado, jsonFinalizado);
+        rabbitTemplate.convertAndSend(filaFinalizado, compraFinalizadaJson);
     }
 
     public void republicarOnMessage(Message message) throws JsonParseException, JsonMappingException, IOException {

@@ -1,6 +1,7 @@
-package br.com.maddytec.passagem.configuracao;
+package br.com.maddytec.efetivacao.configuracao;
 
-import br.com.maddytec.passagem.gateway.json.CompraChaveJson;
+import br.com.maddytec.efetivacao.gateway.json.CompraChaveJson;
+import br.com.maddytec.efetivacao.gateway.json.CompraFinalizadaJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -9,7 +10,6 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,8 +58,8 @@ public class RabbitConfiguration {
         Map<String, Class<?>> idClassMapping = new HashMap<>();
         idClassMapping.put(null, String.class);
         idClassMapping.put(null, CompraChaveJson.class);
+        idClassMapping.put(null, CompraFinalizadaJson.class);
         classMapper.setIdClassMapping(idClassMapping);
         return classMapper;
     }
-
 }
