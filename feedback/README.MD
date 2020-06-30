@@ -1,6 +1,6 @@
-# Feedback - Consume da fila de compras finalizadas os resultados das compras, em seguida envia para o banco de dados o resultado das solicitações. Além de expor a consulta dos resultados das solicitações de compras de passagem
+# Feedback - Consome da fila de compras finalizadas os resultados das compras de passagens, em seguida envia para o banco de dados o resultado das solicitações. Além de expor a consulta dos resultados das solicitações de compras de passagem efetuadas
 
-Microservices utilizando docker compose, Spring Boot para consumir requisições em filas RabbitMQ, salvando as mesmas no banco de dados não relacional REDIS e expondo a consulta REST dos resultados das compras.  
+Microservices utilizando docker compose, Spring Boot para consumir requisições em filas RabbitMQ, salvando as mesmas no banco de dados não relacional REDIS e expondo a consulta REST dos resultados das compras finalizadas.  
 
 ## Faça agora, porque na minha máquina funciona ;)
 1. [Baixar projeto](#1-baixar-projeto)
@@ -38,7 +38,7 @@ Requisitos necessários para prosseguir :
  <br>`$ cd efetivacao`
  <br>`$ docker-compose up -d`
 
-- Finalmente,comandos para iniciar os serviços:
+- Finalmente, comandos para iniciar os serviços:
 <br>`$ cd ..`
 <br>`$ cd feedback`
 <br>`$ docker-compose up -d`
