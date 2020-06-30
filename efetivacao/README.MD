@@ -1,4 +1,4 @@
-# Efetivação - Leitura da fila de solicitações de compras, envio da solicitações para a operadora de cartão de crédito, finaliza as compras enviando o resultado das solicitações de compras de passagens para fila de resultado das compras
+# Efetivação - Leitura da fila de solicitações de compras, envio das solicitações para a operadora de cartão de crédito, finaliza as compras enviando o resultado das solicitações de compras de passagens para fila de resultados das compras
 
 Microservices utilizando docker compose, Spring Boot para consumir e fornecer requisições em filas RabbitMQ. Além disso, consumir o serviço externo de banco(Operadora de Cartão de Crédito), com o objetivo geral de tolerancia a falhas  
 
@@ -51,7 +51,7 @@ Após executar o item 2:
 - As requisições de compras são enviadas para fila "fila-compras-aguardando" do RabbitMQ que é disponibilizado pela API passagem. De imediato, a fila "fila-compras-finalizado" é criada pela API efetivação, para armazenar o retorno das requisições de compras enviadas para a API banco, para acessar a interface das filas  adicione a URL http://localhost:8881/ no seu navegador e em seguida preencha o Usuario e senha:
 <br>Usuario: maddytec
 <br>Senha: maddytec
-![Figura 2 - Filas](image/filas.png)
+<br>![Figura 2 - Filas](image/filas.png)
 <br>Figura 2 - Filas
   
 ### 3.2 Consumo da fila fila-compras-aguardando, envio da requisição para o banco e gravação do retorno do banco na fila fila-compras-finalizado
@@ -60,23 +60,24 @@ Após executar o item 2:
  - A fila-compras-finalizado com as colunas Ready e Total com os valorer maior que zero, evidencia o envio das requisições de compras para a API banco e gravação do retorno da requisição de compra. Caso o serviço da API do banco estivesse indisponivel, a API de efetivação gravaria novamente na fila fila-compras-aguardando até que a API banco retorne as atividades. 
 
 ![Figura 3 - Retorno da requisição](image/retorno_positivo.png)
-<br>Figura 3 - Consumo e grvação de retorno das requisições de compras
+<br>Figura 3 - Consumo e gravação de retorno das requisições de compras
 
 - Payload de retorno gravado na fila fila-compras-finalizado com retorno da API banco:
-<br>{"compraChaveJson":{
-<br>"chave":"a71ca047-cae1-4ca8-9767-b536640a638a",
-<br>"compraJson":{
-<br>"codigoPassagem":1,
-<br>"numeroCartao":111222333444555,
-<br>"codigoSegurancaCartao":12,
-<br>"valorPassagem":200}},
-<br>"mensagem":"Pagamento realizado com sucesso.","pagamentoOK":true
+<br>{"compraChaveJson":{ 
+<br>&emsp;"chave":"a71ca047-cae1-4ca8-9767-b536640a638a",
+<br>&emsp;"compraJson":{
+<br>&emsp;&emsp;"codigoPassagem":1,
+<br>&emsp;&emsp;"numeroCartao":111222333444555,
+<br>&emsp;&emsp;"codigoSegurancaCartao":12,
+<br>&emsp;&emsp;"valorPassagem":200}
+<br>&emsp;&emsp;},
+<br>&ensp;"mensagem":"Pagamento realizado com sucesso.","pagamentoOK":true
 <br>}
 
 ![Figura 4 - Requisição gravada na fila fila-compras-finalizado](image/retorno_finalizado.png)
-<br>Figura 4 - Requisição gravada na fila fila-compras-finalizado com o retorno do banco  
+<br>Figura 4 - Requisição gravada na fila fila-compras-finalizado com o retorno da API banco  
 
- - Gravações de requisições de compras efetuadas com sucesso no banco de dados  
+ - Gravações de requisições de compras efetuadas com sucesso no banco de dados MYSQL  
 ![Figura 5 - Requisições enviada para API banco e gravada na tabela de pagamento](image/banco.png)
 <br>Figura 5 - Requisições enviada para API banco e gravada na tabela de pagamento  
 
