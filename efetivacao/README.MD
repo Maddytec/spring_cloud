@@ -1,4 +1,4 @@
-# Efetivação - Leitura da fila de solicitações de compra, envio da solicitação para a operadora de cartão de crédito, finaliza a compra enviando o resultado da solicitação de compra de passagem para fila de resultado da compra
+# Efetivação - Leitura da fila de solicitações de compras, envio da solicitações para a operadora de cartão de crédito, finaliza as compras enviando o resultado das solicitações de compras de passagens para fila de resultado das compras
 
 Microservices utilizando docker compose, Spring Boot para consumir e fornecer requisições em filas RabbitMQ. Além disso, consumir o serviço externo de banco(Operadora de Cartão de Crédito), com o objetivo geral de tolerancia a falhas  
 
@@ -6,7 +6,7 @@ Microservices utilizando docker compose, Spring Boot para consumir e fornecer re
 1. [Baixar projeto](#1-baixar-projeto)
 2. [Inicializando os serviços](#2-inicializando-os-serviços)
 3. [Como testar o projeto?](#3-como-testar-o-projeto)
-<br> 3.1 [Fila de requisição de compra e fila de retorno da requisição de compra enviada para o banco](#31-Fila-de-requisição-de-compra-e-fila-de-retorno-da requisição-de-compra-enviada-para-o-banco)
+<br> 3.1 [Fila de requisição de compra e fila de retorno da requisição de compra enviada para o banco](#31-Fila-de-requisição-de-compra-e-fila-de-retorno-da-requisição-de-compra-enviada-para-o-banco)
 <br>3.2 [Consumo da fila fila-compras-aguardando, envio da requisição para o banco e gravação do retorno do banco na fila fila-compras-finalizado](#32-Consumo-da-fila-fila-compras-aguardando-envio-da-requisição-para-o-banco-e-gravação-do-retorno-do-banco-na-fila-fila-compras-finalizado)
 4. [Remover os serviços](#4-remover-os-servi%C3%A7os)
 5. [Licença](#5-licença)
@@ -28,13 +28,13 @@ Requisitos necessários para prosseguir :
 
 - Caso os serviços de passagem não estejam em execução, execute os seguintes comandos:
  <br>`$ cd ..`
- <br>`$ cd passagem
- <br>`$ docker-compose up -d
+ <br>`$ cd passagem`
+ <br>`$ docker-compose up -d`
  
  - Caso os serviços de banco não estejam em execução, execute os seguintes comandos:
  <br>`$ cd ..`
- <br>`$ cd banco
- <br>`$ docker-compose up -d
+ <br>`$ cd banco`
+ <br>`$ docker-compose up -d`
 
 - Comando para listar os serviços:
 <br>`$ docker-compose ps`
@@ -49,8 +49,8 @@ Após executar o item 2:
 ### 3.1 Fila de requisição de compra e fila de retorno da requisição de compra enviada para o banco
 
 - As requisições de compras são enviadas para fila "fila-compras-aguardando" do RabbitMQ que é disponibilizado pela API passagem. De imediato, a fila "fila-compras-finalizado" é criada pela API efetivação, para armazenar o retorno das requisições de compras enviadas para a API banco, para acessar a interface das filas  adicione a URL http://localhost:8881/ no seu navegador e em seguida preencha o Usuario e senha:
-Usuario: maddytec
-Senha: maddytec
+<br>Usuario: maddytec
+<br>Senha: maddytec
 ![Figura 2 - Filas](image/filas.png)
 <br>Figura 2 - Filas
   
@@ -62,8 +62,16 @@ Senha: maddytec
 ![Figura 3 - Retorno da requisição](image/retorno_positivo.png)
 <br>Figura 3 - Consumo e grvação de retorno das requisições de compras
 
-- Payload de retorno gravado na fila fila-compras-finalizado com retorno da API banco
-{"compraChaveJson":{"chave":"a71ca047-cae1-4ca8-9767-b536640a638a","compraJson":{"codigoPassagem":1,"numeroCartao":111222333444555,"codigoSegurancaCartao":12,"valorPassagem":200}},"mensagem":"Pagamento realizado com sucesso.","pagamentoOK":true}
+- Payload de retorno gravado na fila fila-compras-finalizado com retorno da API banco:
+<br>{"compraChaveJson":{
+<br>"chave":"a71ca047-cae1-4ca8-9767-b536640a638a",
+<br>"compraJson":{
+<br>"codigoPassagem":1,
+<br>"numeroCartao":111222333444555,
+<br>"codigoSegurancaCartao":12,
+<br>"valorPassagem":200}},
+<br>"mensagem":"Pagamento realizado com sucesso.","pagamentoOK":true
+<br>}
 
 ![Figura 4 - Requisição gravada na fila fila-compras-finalizado](image/retorno_finalizado.png)
 <br>Figura 4 - Requisição gravada na fila fila-compras-finalizado com o retorno do banco  
