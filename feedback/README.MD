@@ -70,14 +70,13 @@ Após executar o item 2:
  
  - Execute o commando a baixo para listar as chaves
  <br>`$ keys *`
- 
-![Figura 3 - Chaves gravadas](image/chaves.png)
-<br>Figura 3 - Chaves gravadas
+ <br>![Figura 3 - Chaves gravadas](image/chaves.png)
+ <br>Figura 3 - Chaves gravadas
 
  - Substitua a chave no comando abaixo, por uma corresponente ao listado no comando executado anteriormente:
-<br>`$ hgetall compra:bb286b58-9fe5-42ee-b90b-ae80eb5ec10b`
-![Figura 4 - Chave valor](image/chave_valor.png)
-<br>Figura 4 - Chave valor
+ <br>`$ hgetall compra:bb286b58-9fe5-42ee-b90b-ae80eb5ec10b`
+ <br>![Figura 4 - Chave valor](image/chave_valor.png)
+ <br>Figura 4 - Chave valor
 
 
 ### 3.3 Postman para realizar a consulta REST dos resultados das solicitações de compras
