@@ -61,20 +61,31 @@ Após executar o item 2:
 <br>![Figura 2 - Filas](image/filas.png)
 <br>Figura 2 - Filas
   
-### 3.2 Envio dos resultados das solicitações de compras para o banco REDIS
+### 3.2 Envio dos resultados das solicitações de compras para o banco Redis
  
- - Após o cunsumo da fila "fila-compras-finalizado", a API feedback grava no banco de dados REDIS a mensagem da fila
+ - Após o cunsumo da fila "fila-compras-finalizado", a API feedback grava no banco de dados Redis a mensagem da fila.
+ - Para acessar o banco de dados Redis, execute os seguintes comandos:
+  <br>`$ docker exec -it feedback_redis_1 sh`
+  <br>`$ redis-cli`
+ 
+ - Execute o commando a baixo para listar as chaves
+ <br>`$ keys *`
+ 
+![Figura 3 - Chaves gravadas](image/chaves.png)
+<br>Figura 3 - Chaves gravadas
 
-![Figura 3 - Banco REDIS](image/redis.png)
-<br>Figura 3 - Banco REDIS
+ - Substitua a chave no comando abaixo, por uma corresponente ao listado no comando executado anteriormente:
+<br>`$ hgetall compra:bb286b58-9fe5-42ee-b90b-ae80eb5ec10b`
+![Figura 4 - Chave valor](image/chave_valor.png)
+<br>Figura 4 - Chave valor
 
 
 ### 3.3 Postman para realizar a consulta REST dos resultados das solicitações de compras
 
  - Utilize o método get, adicione a URI http://localhost:8082/bb286b58-9fe5-42ee-b90b-ae80eb5ec10b com o chave de sua requisição como parametro de sua URI:
 
-![Figura 4 - Consulta do resultado da compra que foi gravada no banco Redis](image/retorno_positivo.png)
-<br>Figura 4 - Consulta do resultado da compra que foi gravada no banco Redis
+![Figura 5 - Consulta do resultado da compra que foi gravada no banco Redis](image/retorno_positivo.png)
+<br>Figura 5 - Consulta do resultado da compra que foi gravada no banco Redis
 
  
 ## 4. Remover os serviços
